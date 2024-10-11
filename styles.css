@@ -1,0 +1,29 @@
+*{
+    margin:0;
+    padding:0;
+    font-family: sans-serif;
+}
+
+body{
+    background-color: black;
+    color: white;
+}
+
+h1{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.game_button{
+    background-color: transparent;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.game_button img{
+    width: 100px;
+}
