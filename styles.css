@@ -25,10 +25,46 @@ h1{
     border: 3px solid white;
     margin-right: 20px;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.game_button:hover{
+    transform: scale(1.05);
+    border-color: #4CAF50;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+}
+
+.game_button:active{
+    transform: scale(0.95);
+}
+
+.game_button.pressed{
+    animation: buttonPress 0.3s ease;
+}
+
+@keyframes buttonPress {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
 .game_button img{
     width: 100px;
+}
+
+.ResultDisplay{
+    font-size: 40px;
+    transition: all 0.5s ease;
+}
+
+.ResultDisplay.updating{
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.ResultDisplay.show{
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .playerResults{
@@ -40,8 +76,28 @@ h1{
 
 .palyerDisplay, .ComputerDisplay{
     font-size: 25px;
+    transition: all 0.3s ease;
+    opacity: 1;
 }
 
-.ResultDisplay{
-    font-size: 40px;
+.choice-updating {
+    opacity: 0.5;
+    transform: scale(0.9);
+}
+
+.choice-reveal {
+    opacity: 1;
+    transform: scale(1.05);
+    animation: reveal 0.5s ease;
+}
+
+@keyframes reveal {
+    0% { 
+        opacity: 0;
+        transform: scale(0.8) rotateY(90deg);
+    }
+    100% { 
+        opacity: 1;
+        transform: scale(1.05) rotateY(0);
+    }
 }
