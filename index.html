@@ -10,18 +10,25 @@
 
     <body>
         <h1 class="title">Rock Paper Scissors</h1>
-        <button class="game_button">
+        <button onclick="playGame('rock')" class="game_button">
             <img src="rock-emoji.png" alt="rock image">
         </button>
 
-        <button class="game_button">
+        <button onclick="playGame('paper')" class="game_button">
             <img src="paper-emoji.png" alt="paper image">
         </button>
 
-        <button class="game_button">
+        <button onclick="playGame('scissors')" class="game_button">
             <img src="scissors-emoji.png" alt="scissors image">
         </button>
 
+        <div class="playerResults">
+            <div class="palyerDisplay">You :</div>
+            <div class="ComputerDisplay">Computer :</div>
+        </div>
+            <div class="ResultDisplay">It's a tie</div>
+        
 
+        
     </body>
 </html>

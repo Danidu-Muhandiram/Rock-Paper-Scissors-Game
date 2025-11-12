@@ -7,11 +7,14 @@
 body{
     background-color: black;
     color: white;
+    text-align: center;
 }
 
 h1{
     font-size: 30px;
     font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .game_button{
@@ -26,4 +29,19 @@ h1{
 
 .game_button img{
     width: 100px;
+}
+
+.playerResults{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0px;
+    gap: 40px;
+}
+
+.palyerDisplay, .ComputerDisplay{
+    font-size: 25px;
+}
+
+.ResultDisplay{
+    font-size: 40px;
 }
