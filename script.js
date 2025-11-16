@@ -1,5 +1,8 @@
 // Rock Paper Scissors Game Logic
 let gameInProgress = false;
+let playerWins = 0;
+let computerWins = 0;
+const WINS_TO_WIN = 5;
 
 function playGame(playerChoice) {
     // Prevent clicks if game is already in progress
@@ -105,8 +108,16 @@ function showResult(result, resultDisplay, playerChoice, computerChoice) {
     // Add winner highlighting
     highlightWinner(result, playerChoice, computerChoice);
     
+    // Update win counters and progress bar
+    updateWinCounter(result);
+    
     setTimeout(() => {
         resultDisplay.classList.remove('show');
+        
+        // Check for game over - this is where animations should trigger
+        if (checkGameOver()) {
+            return; // Don't re-enable buttons if game is over
+        }
         
         // Re-enable buttons after animation completes
         setTimeout(() => {
@@ -177,4 +188,161 @@ function updateDisplay(playerChoice, computerChoice, result) {
 
 function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function updateWinCounter(result) {
+    if (result.includes('You win')) {
+        playerWins++;
+    } else if (result.includes('Computer wins')) {
+        computerWins++;
+    }
+    // Ties don't count toward win total
+    
+    updateProgressBar();
+}
+
+function updateProgressBar() {
+    const progressFill = document.getElementById('progressFill');
+    const progressCenter = document.querySelector('.progress-center');
+    
+    // Update center text
+    progressCenter.textContent = `${playerWins} - ${computerWins}`;
+    
+    // Each win = 10% of bar width (5 wins = 50% of total bar)
+    const playerPercentage = (playerWins / WINS_TO_WIN) * 50; // Player fills left half (0% to 50%)
+    const computerPercentage = (computerWins / WINS_TO_WIN) * 50; // Computer fills right half (50% to 100%)
+    
+    // Create gradient: [Player Green][Center][Computer Red]
+    // Player side: 0% to 50%, Computer side: 50% to 100%
+    const playerEnd = playerPercentage; // How much green from left
+    const computerStart = 100 - computerPercentage; // Where red starts from right
+    
+    progressFill.style.background = `linear-gradient(to right, 
+        #4CAF50 0%, #4CAF50 ${playerEnd}%, 
+        #333 ${playerEnd}%, #333 ${computerStart}%, 
+        #f44336 ${computerStart}%, #f44336 100%)`;
+}
+
+function checkGameOver() {
+    if (playerWins >= WINS_TO_WIN || computerWins >= WINS_TO_WIN) {
+        const resultDisplay = document.querySelector('.ResultDisplay');
+        const winner = playerWins >= WINS_TO_WIN ? 'YOU WIN THE MATCH!' : 'COMPUTER WINS THE MATCH!';
+        
+        setTimeout(() => {
+            resultDisplay.textContent = winner;
+            resultDisplay.style.fontSize = '35px';
+            resultDisplay.style.color = playerWins >= WINS_TO_WIN ? '#4CAF50' : '#f44336';
+            
+            // Trigger background animations when match is won (5 wins reached)
+            const matchResult = playerWins >= WINS_TO_WIN ? 'You win!' : 'Computer wins!';
+            triggerBackgroundAnimation(matchResult);
+            
+            // Add reset button
+            setTimeout(() => {
+                const resetBtn = document.createElement('button');
+                resetBtn.textContent = 'Play Again';
+                resetBtn.className = 'reset-button';
+                resetBtn.onclick = resetGame;
+                document.body.appendChild(resetBtn);
+            }, 2000);
+        }, 1000);
+        
+        return true;
+    }
+    return false;
+}
+
+function resetGame() {
+    playerWins = 0;
+    computerWins = 0;
+    gameInProgress = false;
+    
+    // Reset displays
+    const resultDisplay = document.querySelector('.ResultDisplay');
+    resultDisplay.textContent = "Let's play!";
+    resultDisplay.style.fontSize = '40px';
+    resultDisplay.style.color = 'white';
+    
+    const playerDisplay = document.querySelector('.palyerDisplay');
+    const computerDisplay = document.querySelector('.ComputerDisplay');
+    playerDisplay.textContent = 'You :';
+    computerDisplay.textContent = 'Computer :';
+    
+    // Reset progress bar
+    updateProgressBar();
+    
+    // Remove reset button
+    const resetBtn = document.querySelector('.reset-button');
+    if (resetBtn) {
+        resetBtn.remove();
+    }
+    
+    // Re-enable buttons
+    enableButtons();
+    
+    // Reset button highlights
+    const buttons = document.querySelectorAll('.game_button');
+    buttons.forEach(button => {
+        button.style.border = '3px solid white';
+        button.style.boxShadow = 'none';
+        button.style.backgroundColor = 'transparent';
+    });
+}
+
+function triggerBackgroundAnimation(result) {
+    const body = document.body;
+    const container = document.getElementById('celebrationContainer');
+    
+    // Clear any existing animations
+    container.innerHTML = '';
+    body.className = body.className.replace(/\b(win|lose|tie)-bg-pulse\b/g, '');
+    
+    if (result.includes('You win')) {
+        // Win animation
+        body.classList.add('win-bg-pulse');
+        createCelebrationItems(['🎉', '🎊', '✨', '🌟', '🎈', '🏆'], 'win-confetti', 15);
+    } else if (result.includes('Computer wins')) {
+        // Lose animation  
+        body.classList.add('lose-bg-pulse');
+        createCelebrationItems(['😢', '💧', '😔', '😞', '😿', '💔'], 'lose-float', 10);
+    } else {
+        // Tie animation
+        body.classList.add('tie-bg-pulse');
+        createCelebrationItems(['⭐', '✨', '💫', '🌟', '⚡', '💎'], 'tie-sparkle', 8);
+    }
+    
+    // Remove background pulse class after animation
+    setTimeout(() => {
+        body.classList.remove('win-bg-pulse', 'lose-bg-pulse', 'tie-bg-pulse');
+    }, 1000);
+}
+
+function createCelebrationItems(emojis, animationClass, count) {
+    const container = document.getElementById('celebrationContainer');
+    
+    for (let i = 0; i < count; i++) {
+        const item = document.createElement('div');
+        item.className = `celebration-item ${animationClass}`;
+        item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        // Random positioning
+        item.style.left = Math.random() * 100 + '%';
+        item.style.top = Math.random() * -100 + 'px';
+        
+        // Random delay for staggered effect
+        item.style.animationDelay = Math.random() * 2 + 's';
+        
+        // Random size variation
+        const size = 20 + Math.random() * 20; // 20-40px
+        item.style.fontSize = size + 'px';
+        
+        container.appendChild(item);
+        
+        // Remove item after animation completes
+        setTimeout(() => {
+            if (item.parentNode) {
+                item.parentNode.removeChild(item);
+            }
+        }, 5000);
+    }
 }

@@ -9,7 +9,24 @@
     </head>
 
     <body>
+        <!-- Celebration Animation Container -->
+        <div class="celebration-container" id="celebrationContainer"></div>
+        
         <h1 class="title">Rock Paper Scissors</h1>
+        
+        <!-- Progress Bar for First to 5 Wins -->
+        <div class="progress-container">
+            <div class="progress-label">First to 5 Wins</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+                <div class="progress-center">0 - 0</div>
+            </div>
+            <div class="progress-labels">
+                <span class="player-label">You</span>
+                <span class="computer-label">Computer</span>
+            </div>
+        </div>
+
         <button onclick="playGame('rock')" class="game_button">
             <img src="rock-emoji.png" alt="rock image">
         </button>
