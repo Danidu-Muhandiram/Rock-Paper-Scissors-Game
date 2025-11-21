@@ -12,7 +12,7 @@ Remember those simple playground battles? Wanna try it again? But this time, let
 
 **Ready to Battle?**
 
-[![PLAY NOW](https://img.shields.io/badge/🎮_PLAY_NOW-FF4444?style=for-the-badge&logoColor=white)](./index.html)
+[![PLAY NOW](https://img.shields.io/badge/🎮_PLAY_NOW-FF4444?style=for-the-badge&logoColor=white)](https://danidu-muhandiram.github.io/Rock-Paper-Scissors-Game/)
 
 *Click to start your championship journey!*
 
