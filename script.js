@@ -70,17 +70,13 @@ function startGameSequence(playerChoice) {
         setTimeout(() => playerDisplay.classList.remove('choice-reveal'), 500);
     }, 200);
     
-    // Show countdown for computer
-    let countdown = 3;
-    const countdownInterval = setInterval(() => {
-        computerDisplay.textContent = `Computer: ${countdown}...`;
-        countdown--;
-        
-        if (countdown < 0) {
-            clearInterval(countdownInterval);
-            revealComputerChoice(playerChoice, computerDisplay, resultDisplay);
-        }
-    }, 600);
+    // Show "Opponent thinking..." message during wait time
+    computerDisplay.textContent = `Opponent thinking...`;
+    
+    // Wait for the same duration as before, then reveal choice
+    setTimeout(() => {
+        revealComputerChoice(playerChoice, computerDisplay, resultDisplay);
+    }, 2400); // 4 intervals * 600ms = 2400ms total
 }
 
 function revealComputerChoice(playerChoice, computerDisplay, resultDisplay) {
@@ -89,7 +85,7 @@ function revealComputerChoice(playerChoice, computerDisplay, resultDisplay) {
     const computerChoice = choices[Math.floor(Math.random() * 3)];
     
     // Show computer choice
-    computerDisplay.textContent = `Computer: ${capitalizeFirst(computerChoice)}`;
+    computerDisplay.textContent = `Opponent: ${capitalizeFirst(computerChoice)}`;
     computerDisplay.classList.remove('choice-updating');
     computerDisplay.classList.add('choice-reveal');
     
@@ -117,21 +113,21 @@ function showResult(result, resultDisplay, playerChoice, computerChoice) {
     // Show appropriate message based on whether this wins the match
     if (willWinMatch) {
         if (result.includes('You win')) {
-            resultDisplay.textContent = "Congratulations! You won the match!";
+            resultDisplay.textContent = "VICTORY IS YOURS! YOU'RE THE CHAMPION!";
             resultDisplay.style.color = '#4CAF50';
             resultDisplay.style.fontSize = '35px';
         } else if (result.includes('Computer wins')) {
-            resultDisplay.textContent = "Game over! Computer won the match!";
+            resultDisplay.textContent = "THE OPPONENT TAKES THE CROWN THIS TIME! \nREADY FOR A REMATCH?";
             resultDisplay.style.color = '#f44336';
             resultDisplay.style.fontSize = '35px';
         }
     } else {
         // Regular round messages
         if (result.includes('You win')) {
-            resultDisplay.textContent = "Great job! You won this round!";
+            resultDisplay.textContent = "Nice choice! You got this one!";
             resultDisplay.style.color = '#4CAF50';
         } else if (result.includes('Computer wins')) {
-            resultDisplay.textContent = "Oh no! Computer won this round!";
+            resultDisplay.textContent = "The Opponent outsmarted you there!\nBetter luck next round!";
             resultDisplay.style.color = '#f44336';
         } else {
             resultDisplay.textContent = "It's a tie! Nobody wins this round.";
@@ -268,25 +264,23 @@ function checkGameOver() {
     if (playerWins >= WINS_TO_WIN || computerWins >= WINS_TO_WIN) {
         const resultDisplay = document.querySelector('.ResultDisplay');
         
+        // No delay - trigger animations immediately with the final message
+        // Just ensure the styling is correct
+        resultDisplay.style.fontSize = '35px';
+        resultDisplay.style.color = playerWins >= WINS_TO_WIN ? '#4CAF50' : '#f44336';
+        
+        // Show background effects immediately when someone wins the match
+        const matchResult = playerWins >= WINS_TO_WIN ? 'You win!' : 'Computer wins!';
+        triggerBackgroundAnimation(matchResult);
+        
+        // Add reset button after animations have time to show
         setTimeout(() => {
-            // Don't change the text - showResult already set the match-winning message
-            // Just ensure the styling is correct
-            resultDisplay.style.fontSize = '35px';
-            resultDisplay.style.color = playerWins >= WINS_TO_WIN ? '#4CAF50' : '#f44336';
-            
-            // Show background effects when someone wins the match
-            const matchResult = playerWins >= WINS_TO_WIN ? 'You win!' : 'Computer wins!';
-            triggerBackgroundAnimation(matchResult);
-            
-            // Add reset button
-            setTimeout(() => {
-                const resetBtn = document.createElement('button');
-                resetBtn.textContent = 'Play Again';
-                resetBtn.className = 'reset-button';
-                resetBtn.onclick = resetGame;
-                document.body.appendChild(resetBtn);
-            }, 2000);
-        }, 1000);
+            const resetBtn = document.createElement('button');
+            resetBtn.textContent = 'Play Again';
+            resetBtn.className = 'reset-button';
+            resetBtn.onclick = resetGame;
+            document.body.appendChild(resetBtn);
+        }, 2000);
         
         return true;
     }
@@ -300,14 +294,14 @@ function resetGame() {
     
     // Clear all text displays
     const resultDisplay = document.querySelector('.ResultDisplay');
-    resultDisplay.textContent = "Let's play!";
+    resultDisplay.textContent = "First to 5 wins!";
     resultDisplay.style.fontSize = '40px';
     resultDisplay.style.color = 'white';
     
     const playerDisplay = document.querySelector('.palyerDisplay');
     const computerDisplay = document.querySelector('.ComputerDisplay');
     playerDisplay.textContent = 'You :';
-    computerDisplay.textContent = 'Computer :';
+    computerDisplay.textContent = 'Opponent :';
     
     // Reset progress bar
     updateProgressBar();
