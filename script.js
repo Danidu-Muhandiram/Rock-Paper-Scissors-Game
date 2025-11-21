@@ -117,7 +117,7 @@ function showResult(result, resultDisplay, playerChoice, computerChoice) {
             resultDisplay.style.color = '#4CAF50';
             resultDisplay.style.fontSize = '35px';
         } else if (result.includes('Computer wins')) {
-            resultDisplay.textContent = "THE OPPONENT TAKES THE CROWN THIS TIME! \nREADY FOR A REMATCH?";
+            resultDisplay.textContent = "THE OPPONENT TAKES THE CROWN THIS TIME! READY FOR A REMATCH?";
             resultDisplay.style.color = '#f44336';
             resultDisplay.style.fontSize = '35px';
         }
@@ -127,7 +127,7 @@ function showResult(result, resultDisplay, playerChoice, computerChoice) {
             resultDisplay.textContent = "Nice choice! You got this one!";
             resultDisplay.style.color = '#4CAF50';
         } else if (result.includes('Computer wins')) {
-            resultDisplay.textContent = "The Opponent outsmarted you there!\nBetter luck next round!";
+            resultDisplay.textContent = "The Opponent outsmarted you there! Better luck next round!";
             resultDisplay.style.color = '#f44336';
         } else {
             resultDisplay.textContent = "It's a tie! Nobody wins this round.";
