@@ -20,8 +20,10 @@ h1{
 /* Progress Bar Styles */
 .progress-container {
     margin: 20px auto 40px;
-    width: 400px;
+    width: min(400px, 90vw); /* Responsive width */
+    max-width: 400px;
     text-align: center;
+    padding: 0 15px; /* Add padding for edge spacing */
 }
 
 .progress-label {
@@ -85,11 +87,15 @@ h1{
 
 .game_button{
     background-color: transparent;
-    width: 150px;
-    height: 150px;
+    width: min(150px, 25vw); /* Responsive button size */
+    height: min(150px, 25vw);
+    max-width: 150px;
+    max-height: 150px;
+    min-width: 100px; /* Minimum usable size */
+    min-height: 100px;
     border-radius: 50%;
     border: 3px solid white;
-    margin-right: 20px;
+    margin-right: min(20px, 2vw); /* Responsive margin */
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -490,5 +496,83 @@ h1{
     100% { 
         opacity: 1;
         transform: scale(1.05) rotateY(0);
+    }
+}
+
+/* Mobile and Responsive Design */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .game_button img {
+        width: 60px;
+    }
+    
+    .ResultDisplay {
+        font-size: 28px;
+        padding: 0 15px;
+        line-height: 1.2;
+        word-wrap: break-word;
+    }
+    
+    .playerResults {
+        flex-direction: column;
+        gap: 20px;
+        margin: 30px 15px;
+    }
+    
+    .palyerDisplay, .ComputerDisplay {
+        font-size: 20px;
+    }
+    
+    .progress-bar {
+        height: 25px;
+    }
+    
+    .progress-center {
+        font-size: 12px;
+    }
+    
+    .progress-labels {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 0 10px;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
+    
+    .game_button {
+        margin-right: 10px;
+    }
+    
+    .game_button img {
+        width: 50px;
+    }
+    
+    .ResultDisplay {
+        font-size: 22px;
+        padding: 0 10px;
+        word-wrap: break-word;
+    }
+    
+    .palyerDisplay, .ComputerDisplay {
+        font-size: 18px;
+    }
+    
+    .progress-bar {
+        height: 20px;
+    }
+    
+    .progress-center {
+        font-size: 11px;
     }
 }
