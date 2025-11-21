@@ -200,62 +200,32 @@ h1{
 
 .celebration-item {
     position: absolute;
-    font-size: 30px;
+    font-size: 50px;
     opacity: 0;
-    animation-duration: 3s;
+    animation-duration: 4s;
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    z-index: 1001;
 }
 
 /* Win Animation - Confetti falling */
 .win-confetti {
-    animation: fallDown 3s ease-out forwards;
+    animation: fallDown 4s ease-out forwards;
 }
 
 @keyframes fallDown {
     0% {
         opacity: 1;
-        transform: translateY(-100px) rotate(0deg);
+        transform: translateY(-100px) rotate(0deg) scale(0.5);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(-50px) rotate(36deg) scale(1);
     }
     100% {
         opacity: 0;
-        transform: translateY(100vh) rotate(360deg);
-    }
-}
-
-/* Lose Animation - Sad items floating */
-.lose-float {
-    animation: floatAway 3s ease-out forwards;
-}
-
-@keyframes floatAway {
-    0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-    50% {
-        opacity: 0.8;
-        transform: translateY(-50px) scale(1.2);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-200px) scale(0.5);
-    }
-}
-
-/* Tie Animation - Sparkles */
-.tie-sparkle {
-    animation: sparkle 2s ease-in-out forwards;
-}
-
-@keyframes sparkle {
-    0%, 100% {
-        opacity: 0;
-        transform: scale(0.5) rotate(0deg);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.5) rotate(180deg);
+        transform: translateY(100vh) rotate(720deg) scale(0.8);
     }
 }
 
@@ -266,7 +236,7 @@ h1{
 
 @keyframes winPulse {
     0% { background-color: black; }
-    50% { background-color: rgba(76, 175, 80, 0.1); }
+    50% { background-color: rgba(76, 175, 80, 0.3); }
     100% { background-color: black; }
 }
 
@@ -276,18 +246,167 @@ h1{
 
 @keyframes losePulse {
     0% { background-color: black; }
-    50% { background-color: rgba(244, 67, 54, 0.1); }
+    25% { background-color: rgba(139, 0, 0, 0.4); }
+    50% { background-color: rgba(244, 67, 54, 0.3); }
+    75% { background-color: rgba(139, 0, 0, 0.4); }
     100% { background-color: black; }
 }
 
-.tie-bg-pulse {
-    animation: tiePulse 1s ease-in-out;
+/* Progress Bar Animation Styles */
+.progress-piece {
+    position: absolute;
+    border-radius: 2px;
+    z-index: 1002;
 }
 
-@keyframes tiePulse {
-    0% { background-color: black; }
-    50% { background-color: rgba(255, 193, 7, 0.1); }
-    100% { background-color: black; }
+.progress-piece.explosion {
+    animation: explode 2s ease-out forwards;
+}
+
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    20% {
+        transform: translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3)) rotate(180deg) scale(1.2);
+        opacity: 1;
+    }
+    60% {
+        transform: translate(calc(var(--dx) * 0.8), calc(var(--dy) * 0.8)) rotate(540deg) scale(0.8);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy)) rotate(1080deg) scale(0.1);
+        opacity: 0;
+    }
+}
+
+.progress-piece.falling {
+    animation: fall 3s ease-in forwards;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.shake-long {
+    animation: shake 0.8s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+    20%, 40%, 60%, 80% { transform: translateX(8px); }
+}
+
+/* Heartbreak Theme Animations */
+.heartbreak-shake {
+    animation: heartbreakShake 2s ease-in-out;
+}
+
+@keyframes heartbreakShake {
+    0%, 100% { transform: translateX(0) scale(1); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-12px) scale(0.98); }
+    20%, 40%, 60%, 80% { transform: translateX(12px) scale(0.98); }
+    50% { transform: translateX(0) scale(0.95); }
+}
+
+@keyframes crackSpread {
+    0% {
+        opacity: 0;
+        transform: scale(0.1) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1) rotate(5deg);
+    }
+    100% {
+        opacity: 0.3;
+        transform: scale(1.1) rotate(0deg);
+    }
+}
+
+@keyframes crackAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.bar-glass-piece {
+    transform-origin: center center;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.6));
+}
+
+@keyframes barShatter {
+    0% {
+        transform: translateY(0) rotate(0deg) translateX(0) scale(1);
+        opacity: 1;
+    }
+    20% {
+        transform: translateY(10vh) rotate(calc(var(--rotation, 180deg) * 0.3)) translateX(calc(var(--sway, 100px) * 0.2)) scale(0.95);
+        opacity: 0.9;
+    }
+    50% {
+        transform: translateY(50vh) rotate(calc(var(--rotation, 180deg) * 0.6)) translateX(calc(var(--sway, 100px) * 0.6)) scale(0.8);
+        opacity: 0.7;
+    }
+    80% {
+        transform: translateY(80vh) rotate(calc(var(--rotation, 180deg) * 0.9)) translateX(calc(var(--sway, 100px) * 0.9)) scale(0.5);
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(100vh) rotate(var(--rotation, 180deg)) translateX(var(--sway, 100px)) scale(0.2);
+        opacity: 0;
+    }
+}
+
+@keyframes shake-long {
+    0%, 100% { transform: translateX(0) scale(1); }
+    5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85%, 95% { 
+        transform: translateX(-8px) scale(1.05); 
+    }
+    10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% { 
+        transform: translateX(8px) scale(1.05); 
+    }
+}
+
+.crack-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #FFD700;
+    animation: crack 1s ease-out;
+    z-index: 10;
+}
+
+@keyframes crack {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 0.8; transform: scale(1); }
+}
 
 .game_button{
     background-color: transparent;
