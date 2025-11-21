@@ -103,9 +103,41 @@ function revealComputerChoice(playerChoice, computerDisplay, resultDisplay) {
 }
 
 function showResult(result, resultDisplay, playerChoice, computerChoice) {
-    resultDisplay.textContent = result;
     resultDisplay.classList.remove('updating');
     resultDisplay.classList.add('show');
+    
+    // Check if this round will win the match (before updating the score)
+    let willWinMatch = false;
+    if (result.includes('You win') && playerWins + 1 >= WINS_TO_WIN) {
+        willWinMatch = true;
+    } else if (result.includes('Computer wins') && computerWins + 1 >= WINS_TO_WIN) {
+        willWinMatch = true;
+    }
+    
+    // Show appropriate message based on whether this wins the match
+    if (willWinMatch) {
+        if (result.includes('You win')) {
+            resultDisplay.textContent = "Congratulations! You won the match!";
+            resultDisplay.style.color = '#4CAF50';
+            resultDisplay.style.fontSize = '35px';
+        } else if (result.includes('Computer wins')) {
+            resultDisplay.textContent = "Game over! Computer won the match!";
+            resultDisplay.style.color = '#f44336';
+            resultDisplay.style.fontSize = '35px';
+        }
+    } else {
+        // Regular round messages
+        if (result.includes('You win')) {
+            resultDisplay.textContent = "Great job! You won this round!";
+            resultDisplay.style.color = '#4CAF50';
+        } else if (result.includes('Computer wins')) {
+            resultDisplay.textContent = "Oh no! Computer won this round!";
+            resultDisplay.style.color = '#f44336';
+        } else {
+            resultDisplay.textContent = "It's a tie! Nobody wins this round.";
+            resultDisplay.style.color = '#FFD700';
+        }
+    }
     
     // Color the winning choice
     highlightWinner(result, playerChoice, computerChoice);
@@ -118,15 +150,21 @@ function showResult(result, resultDisplay, playerChoice, computerChoice) {
         
         // Check if game is over
         if (checkGameOver()) {
+            resultDisplay.style.color = 'white'; // Reset color only if game ends
             return; // Don't allow more clicks if game ended
         }
+        
+        // Keep the color for a bit longer before resetting
+        setTimeout(() => {
+            resultDisplay.style.color = 'white'; // Reset color for next round
+        }, 1000);
         
         // Ready for next round
         setTimeout(() => {
             gameInProgress = false;
             enableButtons();
         }, 500);
-    }, 500);
+    }, 2000); // Increased from 500ms to 2000ms to show colors longer
 }
 
 function highlightWinner(result, playerChoice, computerChoice) {
@@ -229,10 +267,10 @@ function updateProgressBar() {
 function checkGameOver() {
     if (playerWins >= WINS_TO_WIN || computerWins >= WINS_TO_WIN) {
         const resultDisplay = document.querySelector('.ResultDisplay');
-        const winner = playerWins >= WINS_TO_WIN ? 'YOU WIN THE MATCH!' : 'COMPUTER WINS THE MATCH!';
         
         setTimeout(() => {
-            resultDisplay.textContent = winner;
+            // Don't change the text - showResult already set the match-winning message
+            // Just ensure the styling is correct
             resultDisplay.style.fontSize = '35px';
             resultDisplay.style.color = playerWins >= WINS_TO_WIN ? '#4CAF50' : '#f44336';
             
@@ -290,17 +328,6 @@ function resetGame() {
         button.style.boxShadow = 'none';
         button.style.backgroundColor = 'transparent';
     });
-}
-
-// Test functions for animations
-function testWinAnimation() {
-    console.log('Testing win animation...');
-    triggerBackgroundAnimation('You win!');
-}
-
-function testLoseAnimation() {
-    console.log('Testing lose animation...');
-    triggerBackgroundAnimation('Computer wins!');
 }
 
 function triggerBackgroundAnimation(result) {
