@@ -123,6 +123,18 @@ function determineWinner(player, computer) {
 - **Lines of Code**: ~550 JavaScript, ~430 CSS
 - **File Size**: Ultra-lightweight (~15KB total)
 
+## 📄 License
+
+This project is licensed under the MIT License. Feel free to use, modify, and distribute as needed.
+
+---
+
+<div align="center">
+
+
+**⭐ Don't forget to star this repository if you found it helpful! ⭐**
+
+</div>
 
 
 </div>
