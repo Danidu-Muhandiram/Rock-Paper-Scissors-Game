@@ -1,5 +1,3 @@
-# 🪨📄✂️ Epic Rock Paper Scissors Championship
-
 ## 🎮 Wanna Try Your Childhood Rock Paper Scissors Game?
 
 Remember those simple playground battles? Wanna try it again? But this time, let's play with a tough digital opponent!
@@ -9,7 +7,6 @@ Remember those simple playground battles? Wanna try it again? But this time, let
 - **🎨 Spectacular Animations**: Watch your victories explode in confetti or witness heartbreaking glass-shattering defeats
 - **🤖 Smart Opponent**: Face off against an computer opponent that's fair but fierce
 - **📊 Live Progress Tracking**: Visual progress bars that fill as you battle for supremacy
-- **💥 Celebration Effects**: Every win and loss feels cinematic
 
 <div align="center">
 
@@ -126,10 +123,6 @@ function determineWinner(player, computer) {
 - **Lines of Code**: ~550 JavaScript, ~430 CSS
 - **File Size**: Ultra-lightweight (~15KB total)
 
----
+
 
 </div>
-
----
-
-*Built with ❤️ and way too much attention to detail*
